@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雲林元長子茂社區</title>
+    <style>
+        /* --- 全域樣式 --- */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            line-height: 1.6;
+            background-color: #f0f8ff; /* 愛麗絲藍背景 */
+            color: #333; /* 深灰色文字 */
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .container {
+            width: min(90%, 1200px); /* 響應式寬度 */
+            margin-inline: auto;
+        }
+
+        /* --- 頁首 --- */
+        header {
+            position: relative;
+            background: linear-gradient(rgba(0, 188, 212, 0.7), rgba(0, 188, 212, 0.7)), url('https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=2400&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5em 0;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        header .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        header h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem); /* 響應式標題 */
+            font-weight: 700;
+            margin-bottom: 0.5em;
+            letter-spacing: 0.05em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            opacity: 0.9;
+        }
+
+        /* --- 導覽列 --- */
+        nav {
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-block: 2em;
+            position: sticky; /* 固定導覽列 */
+            top: 1rem;
+            z-index: 10;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: space-around;
+            padding: 1em;
+            list-style: none;
+        }
+
+        nav li {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        nav a {
+            display: block;
+            color: #00bcd4; /* 亮青色 */
+            padding: 0.75em;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: white;
+            background-color: #00bcd4;
+            border-radius: 8px;
+        }
+		.products {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 100px 0;
+        }
+
+        .product-card {
+            width: 300px;
+            margin: 20px;
+            background: rgba(0, 0, 0, 0.8);  /* 更強的透明效果 */
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .product-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .product-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .product-btn {
+            padding: 10px 20px;
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .product-btn:hover {
+            background-color: #0097a7;
+        }
+
+        /* 影片展示區 */
+        .video-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 100px 0;
+        }
+
+        .video-container {
+            position: relative;
+            width: 80%;
+            max-width: 2048px;
+            padding-top: 45%;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- 主要內容 --- */
+        main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* 響應式網格 */
+            gap: 2.5em;
+            margin-bottom: 3em;
+        }
+
+        article {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        article:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        article .content {
+            padding: 1.5em;
+        }
+
+        article h2 {
+            font-size: 1.75rem;
+            color: #0097a7; /* 暗青色 */
+            margin-bottom: 0.75em;
+            border-bottom: 2px solid #b2ebf2; /* 淺青色底線 */
+            padding-bottom: 0.5em;
+        }
+
+        article p {
+            opacity: 0.8;
+            line-height: 1.7;
+        }
+
+        article img {
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 4px solid #00bcd4;
+        }
+
+        /* --- 側邊欄 --- */
+        aside {
+            background-color: #e0f7fa; /* 非常淺的青色 */
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 2em;
+            grid-column: 1 / -1; 
+        }
+
+        aside h2 {
+            font-size: 1.5rem;
+            color: #00838f;
+            margin-bottom: 1em;
+            border-bottom: 1px solid #4dd0e1;
+            padding-bottom: 0.5em;
+        }
+        
+        aside section {
+            margin-bottom: 2em;
+        }
+
+        aside ul {
+            padding-left: 1.25em;
+            list-style: '🌾 '; /* 使用表情符號作為項目符號 */
+        }
+
+        aside li {
+            margin-bottom: 0.6em;
+            padding-left: 0.5em;
+        }
+
+        /* --- 頁尾 --- */
+        footer {
+            background-color: #0097a7;
+            color: white;
+            text-align: center;
+            padding: 2em 0;
+            margin-top: 4em;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1em;
+        }
+        
+        footer a {
+            color: white;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            text-decoration: underline;
+        }
+
+        footer a:hover {
+            opacity: 1;
+        }
+		
+
+        /* --- 響應式設計 --- */
+        @media (max-width: 768px) {
+            nav {
+                position: static; /* 在小螢幕上取消固定 */
+            }
+            nav ul {
+                flex-direction: column;
+                gap: 0.5em;
+            }
+            footer .container {
+                flex-direction: column;
+            }
+        }
+		<style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style>
+
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>雲林元長子茂社區</h1>
+            <p>探索農業之鄉，體驗純樸之美</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="#" class="active">首頁</a></li>
+                <li><a href="https://www.instagram.com/explore/locations/428945165/zi-mao-cun/"target="_blank">社區導覽</a></li>
+                <li><a href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DhUyhHjMC2iw&psig=AOvVaw2qmIUZ7SxmGaEwr3coEEzr&ust=1749870070603000&source=images&cd=vfe&opi=89978449&ved=0CBcQjhxqFwoTCKCrgpG07Y0DFQAAAAAdAAAAABAE"target="_blank">農業</a></li>
+                <li><a href="https://sites.google.com/a/birds-tesri.twbbs.org/yunlinlapwingsurvey/volunteerjoin/2024%E6%99%AE%E6%9F%A5%E7%B5%90%E6%9E%9C"target="_blank">特殊活動</a></li>
+                <li><a href="https://yuanchang.yunlin.gov.tw/News_Content.aspx?n=16899&s=417647"target="_blank">關於</a></li>
+                <li><a href="https://www.facebook.com/p/%E5%AD%90%E8%8C%82%E7%A4%BE%E5%8D%80%E7%99%BC%E5%B1%95%E5%8D%94%E6%9C%83-100064583483159/?locale=zh_TW"target="_blank">聯絡我們</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <article>
+                <!-- 圖片替換為網路圖片URL -->
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSji7t7X1-Nc8txH2-wxFIZeqL4sOJ81AgSbw&s" alt="子茂社區活動中心">
+                <div class="content">
+                    <h2>社區活動中心</h2>
+                    <p>
+                        子茂社區活動中心是社區的心臟，提供居民交流、學習和舉辦活動的場所。
+                        中心設備完善，定期舉辦各種課程和活動，豐富居民的生活。
+                    </p>
+                </div>
+            </article>
+
+            <article>
+                <!-- 圖片替換為網路圖片URL -->
+                <img src="https://blog.worldgymtaiwan.com/hubfs/%E6%96%87%E7%AB%A0%E5%B0%88%E7%94%A8%E5%9C%96%E7%89%87/%E8%8A%B1%E7%94%9F%E7%87%9F%E9%A4%8A%E6%88%90%E5%88%86.jpg" alt="青蔥田園">
+                <div class="content">
+                    <h2>花生田園</h2>
+                    <p>
+                        子茂社區以其廣袤的花生田園而聞名。肥沃的土壤和清新的空氣，
+                        孕育出高品質的花生，是社區主要的經濟作物。
+                    </p>
+                </div>
+            </article>
+
+            <article>
+                <!-- 圖片替換為網路圖片URL -->
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSj7ln7MuMG1xjF9Nm6Z01GE-8IVREv2wzYw&s" alt="傳統廟宇">
+                <div class="content">
+                    <h2>傳統廟宇</h2>
+                    <p>
+                        社區內的傳統廟宇是居民信仰和文化的中心。
+                        精緻的建築和悠久的歷史，見證了社區的發展和變遷。
+                    </p>
+                </div>
+            </article>
+        </main>
+    <!-- 產品介紹 -->
+    <div class="products">
+			<div class="product-card">
+            <h1><p><font color="white"><h1><br><br>產品介紹</font></p><br><br><br>
+            <button class="product-btn" onclick="openModal()">了解更多</button>
+        </div>
+        
+        <div class="product-card">
+            <img src="http://www.339.com.tw/shopping/picture.php?filename=F2013119_2&subname=GIF&type=2" alt="Product 1">
+			<a href="http://www.339.com.tw/shopping/product_desc.php?id=tina13093&p_no=F2013119_2" target="_blank">
+            <h3><font color="white">花生糖</font></h3>
+            <p><font color="white">【價格】100元</font></p>
+            <button class="product-btn"><font color="white">了解更多</font></button>
+        </div>
+		        <div class="product-card">
+            <img src="http://www.339.com.tw/shopping/picture.php?filename=F2013119_2&subname=GIF&type=2" alt="Product 1">
+            <h3><font color="white">花生糖</font></h3>
+			<a href="http://www.339.com.tw/shopping/product_desc.php?id=tina13093&p_no=F2013119_2" target="_blank">
+            <p><font color="white">【價格】100元</font></p>
+            <button class="product-btn"><font color="white">了解更多<a href="http://www.339.com.tw/shopping/product_desc.php?id=tina13093&p_no=F2013119_2" target="_blank"></font></button>
+        </div>
+		
+       
+    </div>
+	 <!-- 影片展示區 -->
+    <div class="video-section">
+        <div class="video-container">
+<div class='embed-container'><iframe width='560' height='315' src='https://www.youtube-nocookie.com/embed/00dy21cT9Z8?rel=0' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe></div>
+
+        </div>
+    </div>
+
+        <aside>
+            <section>
+                <h2>關於子茂社區</h2>
+                <p>
+                    子茂社區位於雲林縣元長鄉，是一個以農業為主的純樸社區。
+                    居民熱情好客，社區擁有豐富的自然資源和深厚的文化底蘊。
+                </p>
+            </section>
+            <section>
+                <h2>合作夥伴</h2>
+                <ul>
+                    <li><a href="https://yuanchang.yunlin.gov.tw/" target="_blank">元長鄉公所</a></li>
+					<li><a href="https://www.yuchangfarm.org.tw/" target="_blank">元長鄉農會</a></li>
+					<li><a href="https://welfare.yunlin.gov.tw/EGroup/GroupDetails/120/2076" target="_blank">子茂社區發展協會</a></li>
+                </ul>
+            </section>
+        </aside>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 子茂社區發展協會</p>
+            <a href="#">回到頁首</a>
+        </div>
+		    <script>
+        // 模態框開關功能
+        function openModal() {
+            alert("左側按鈕點擊購買。");
+        }
+    </script>
+    </footer>
+</body>
+</html>
