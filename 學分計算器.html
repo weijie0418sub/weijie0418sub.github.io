@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學分計算器</title>
+    <style>
+        /* 簡單的 CSS 樣式 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px solid #28a745;
+            background-color: #e2f0e8;
+            border-radius: 4px;
+            font-size: 1.1em;
+            text-align: center;
+            font-weight: bold;
+        }
+        .weights {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>學分計算器</h2>
+
+    <div class="weights">
+        成績權重： 期中考 (30%) + 期末考 (30%) + 平常成績 (40%) = 100%
+    </div>
+
+    <label for="midterm">期中考成績 (佔 30%)：</label>
+    <input type="number" id="midterm" min="0" max="100" required>
+
+    <label for="usual">上學期平常成績 (做為參考)：</label>
+    <input type="number" id="usual" min="0" max="100" required>
+
+    <button onclick="calculateFinalGrade()">計算期末最低分數</button>
+
+    <div id="result">
+        請輸入成績，然後按上方按鈕計算。
+    </div>
+</div>
+
+<script>
+    function calculateFinalGrade() {
+        // 獲取輸入的值
+        const midterm = parseFloat(document.getElementById('midterm').value);
+        const usual = parseFloat(document.getElementById('usual').value);
+        const resultDiv = document.getElementById('result');
+
+        // 檢查輸入是否有效 (非空且在 0-100 範圍內)
+        if (isNaN(midterm) || isNaN(usual) || midterm < 0 || midterm > 100 || usual < 0 || usual > 100) {
+            resultDiv.innerHTML = '<span style="color: red;">請輸入有效的成績 (0 到 100 之間)。</span>';
+            resultDiv.style.borderColor = '#dc3545'; // 變為紅色邊框
+            return;
+        }
+
+        // 定義權重和目標分數
+        const targetScore = 60; // 及格分數
+        const midtermWeight = 0.30;
+        const usualWeight = 0.40;
+        const finalWeight = 0.30;
+
+        // 計算目前已得到的加權分數
+        // (期中成績 * 0.3) + (平常成績 * 0.4)
+        const currentWeightedScore = (midterm * midtermWeight) + (usual * usualWeight);
+
+        // 計算期末考 (30%) 至少要拿到多少加權分數才能達到 60 分
+        // 必須達到的期末考加權分數 = 目標分數 - 已得到的加權分數
+        const requiredFinalWeightedScore = targetScore - currentWeightedScore;
+
+        // 計算實際期末考的成績 (X 分)
+        // requiredFinalWeightedScore = X * finalWeight
+        // X = requiredFinalWeightedScore / finalWeight
+        let requiredFinalScore = requiredFinalWeightedScore / finalWeight;
+
+        // 格式化輸出
+        requiredFinalScore = Math.ceil(requiredFinalScore * 10) / 10; // 向上取到小數點一位，確保不低於及格線
+
+        // 根據結果顯示不同的訊息
+        if (requiredFinalScore <= 0) {
+            // 期中和平常成績加起來已經超過 60 了
+            resultDiv.innerHTML = `恭喜！您的期中和平常成績加權分數已達 ${currentWeightedScore.toFixed(2)} 分。<br>期末考至少 0 分 即可及格 (60 分)。`;
+            resultDiv.style.borderColor = '#28a745';
+        } else if (requiredFinalScore > 100) {
+            // 即使期末考 100 分也無法及格
+            const maxScore = currentWeightedScore + (100 * finalWeight);
+            resultDiv.innerHTML = `<span style="color: red;">抱歉，即使期末考獲得滿分 (100 分)，您的學期成績最高也只能達到 ${maxScore.toFixed(2)} 分，<br>因此無法及格 (60 分)。</span>`;
+            resultDiv.style.borderColor = '#dc3545';
+        } else {
+            // 需要考的分數
+            resultDiv.innerHTML = `若要學期成績達到 60 分及格線，<br>您期末考至少需要考 ${requiredFinalScore.toFixed(1)} 分。`;
+            resultDiv.style.borderColor = '#ffc107'; // 警告色
+        }
+    }
+</script>
+
+</body>
+</html>
