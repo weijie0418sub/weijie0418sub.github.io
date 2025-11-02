@@ -15,13 +15,17 @@
         .course-list {
             display: none;
         }
+		window.onload = function() {
+    alert('歡迎來到我們的網站！');
+}
+
     </style>
 </head>
 <body class="bg-gray-100">
 
     <div class="container mx-auto max-w-2xl p-6 bg-white rounded-lg shadow-xl my-10">
         
-        <h1 class="text-3xl font-bold text-center text-blue-700 mb-6">虎尾高中二類組-學分計算器(到二年級為止)</h1>
+        <h1 class="text-3xl font-bold text-center text-blue-700 mb-6">虎尾高中二類組-學分計算器(到三上為止)</h1>
         
         <!-- 年級選擇 -->
         <div class="mb-6">
@@ -29,7 +33,7 @@
             <select id="grade-selector" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option value="grade1">高一</option>
                 <option value="grade2">高二</option>
-                <option value="grade3">高三(empty)</option>
+                <option value="grade3">高三上</option>
             </select>
         </div>
 
@@ -71,7 +75,7 @@
                     <strong>總學分：</strong>
                     <span id="total-credits" class="font-bold text-2xl text-red-600">0</span> 學分
                 </p><br><strong>虎尾高中畢業條件</strong><br>（1）共取得 150 個學分；<br>
-（2）部定及校訂必修至少取得 102 個學分；<br>
+（2）部定必修及校訂必修科目至少取得 102 個學分；<br>
 （3）選修科目至少取得 40 個學分科目。
             </div>
         </div>
@@ -144,7 +148,22 @@
                 { id: 'g2_elective_b', name: '多元選修B', type: 'elective', credits: 2 },				
             ],
             'grade3': [
-				
+				{ id: 'g3_chinese1', name: '國文', type: 'ministry', credits: 4 },                
+                { id: 'g3_math1', name: '數學甲上', type: 'elective', credits: 4 },
+                { id: 'g3_english1', name: '英文', type: 'ministry', credits: 2 },
+                { id: 'g3_history1', name: '英文閱讀與寫作A', type: 'elective', credits: 1 },
+				{ id: 'g3_geo1', name: '英文聽講A', type: 'elective', credits: 1 },
+				{ id: 'g3_geo10', name: '各類文學選讀', type: 'elective', credits: 1 },
+                { id: 'g3_physics', name: '選修物理-1', type: 'elective', credits: 3 },
+				{ id: 'g3_ear', name: '選修化學-1', type: 'elective', credits: 3 },
+                { id: 'g3_pe1', name: '體育上', type: 'ministry', credits: 2 },
+                { id: 'g3_art1', name: '藝術生活a', type: 'ministry', credits: 1},                
+				{ id: 'g3_mi1', name: '全民國防教育a', type: 'ministry', credits: 1},
+				{ id: 'g3_tech_1_1', name: '機器人專題a', type: 'elective', credits: 2 },
+				{ id: 'g3_tech_2_2', name: '科技應用專題a', type: 'elective', credits: 1 },
+				{ id: 'g3_A', name: '生涯規劃', type: 'ministry', credits: 1 },
+				{ id: 'g3_B1', name: '表達力訓練a', type: 'school', credits: 1 },
+				{ id: 'g3_elective_a', name: '多元選修A', type: 'elective', credits: 2 },
                
             ]
         };
@@ -281,8 +300,4 @@
     </script>
 </body>
 </html>
-
-
-
-
 
